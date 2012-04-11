@@ -42,12 +42,6 @@ public class Screen {
 			pixels[i] = color;
 	}
 
-	/*
-	 * public void renderBackground() { for (int yt = yScroll >> 3; yt <= (yScroll + h) >> 3; yt++) { int yp = yt * 8 - yScroll; for (int xt = xScroll >> 3; xt <= (xScroll + w) >> 3; xt++) { int xp = xt * 8 - xScroll; int ti = (xt & (MAP_WIDTH_MASK)) + (yt & (MAP_WIDTH_MASK)) * MAP_WIDTH; render(xp, yp, tiles[ti], colors[ti], databits[ti]); } }
-	 * 
-	 * for (int i = 0; i < sprites.size(); i++) { Sprite s = sprites.get(i); render(s.x, s.y, s.img, s.col, s.bits); } sprites.clear(); }
-	 */
-
 	public void render(int xp, int yp, int tile, int colors, int bits) {
 		xp -= xOffset;
 		yp -= yOffset;
@@ -66,9 +60,14 @@ public class Screen {
 				if (x + xp < 0 || x + xp >= w) continue;
 
 				int xs = x;
-				if (mirrorX) xs = 7 - x;
+				if (mirrorX) { 
+					xs = 7 - x;
+				}
+				
 				int col = (colors >> (sheet.pixels[xs + ys * sheet.width + toffs] * 8)) & 255;
-				if (col < 255) pixels[(x + xp) + (y + yp) * w] = col;
+				if (col < 255) {
+					pixels[(x + xp) + (y + yp) * w] = col;
+				}
 			}
 		}
 	}

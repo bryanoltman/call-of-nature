@@ -1,23 +1,28 @@
 package com.t23.con.level.tile;
 
 import com.t23.con.entity.Entity;
+import com.t23.con.entity.ItemEntity;
 import com.t23.con.entity.Mob;
 import com.t23.con.entity.Player;
 import com.t23.con.entity.particle.TextParticle;
 import com.t23.con.gfx.Color;
 import com.t23.con.gfx.Screen;
 import com.t23.con.item.Item;
+import com.t23.con.item.ResourceItem;
+import com.t23.con.item.resource.Resource;
 import com.t23.con.level.Level;
 
 public class RockTile extends Tile {
+		
 	public RockTile(int id) {
 		super(id);
 	}
 
 	public void render(Screen screen, Level level, int x, int y) {
 		int col = Color.get(444, 444, 333, 333);
-		int transitionColor = Color.get(111, 444, 555, level.dirtColor);
-
+		int buildup = level.getData(x,y);
+		int transitionColor = Color.get(111 + (110 * buildup), 444, 555, level.dirtColor);
+		
 		boolean u = level.getTile(x, y - 1) != this;
 		boolean d = level.getTile(x, y + 1) != this;
 		boolean l = level.getTile(x - 1, y) != this;
@@ -64,12 +69,11 @@ public class RockTile extends Tile {
 		return false;
 	}
 
-	// TODO
-//	public void hurt(Level level, int x, int y, Mob source, int dmg, int attackDir) {
-//		hurt(level, x, y, dmg);
-//	}
+	public void hurt(Level level, int x, int y, Mob source, int dmg, int attackDir) {
+		hurt(level, x, y, dmg);
+	}
 
-//	public boolean interact(Level level, int xt, int yt, Player player, Item item, int attackDir) {
+	public boolean interact(Level level, int xt, int yt, Player player, Item item, int attackDir) {
 //		if (item instanceof ToolItem) {
 //			ToolItem tool = (ToolItem) item;
 //			if (tool.type == ToolType.pickaxe) {
@@ -79,13 +83,21 @@ public class RockTile extends Tile {
 //				}
 //			}
 //		}
-//		return false;
-//	}
+		
+		return false;
+	}
 
-//	public void hurt(Level level, int x, int y, int dmg) {
+	public void hurt(Level level, int x, int y, int dmg) {
+		int buildup = level.getData(x,y);
+		if (buildup == 0) {
+			buildup++;
+		}
+		
+		level.setData(x, y, buildup);
+		
 //		int damage = level.getData(x, y) + dmg;
-//		level.add(new SmashParticle(x * 16 + 8, y * 16 + 8));
-//		level.add(new TextParticle("" + dmg, x * 16 + 8, y * 16 + 8, Color.get(-1, 500, 500, 500)));
+////		level.add(new SmashParticle(x * 16 + 8, y * 16 + 8));
+////		level.add(new TextParticle("" + dmg, x * 16 + 8, y * 16 + 8, Color.get(-1, 500, 500, 500)));
 //		if (damage >= 50) {
 //			int count = random.nextInt(4) + 1;
 //			for (int i = 0; i < count; i++) {
@@ -99,7 +111,7 @@ public class RockTile extends Tile {
 //		} else {
 //			level.setData(x, y, damage);
 //		}
-//	}
+	}
 
 	public void tick(Level level, int xt, int yt) {
 		int damage = level.getData(xt, yt);

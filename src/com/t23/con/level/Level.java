@@ -189,7 +189,7 @@ public class Level {
 	}
 
 	public Tile getTile(int x, int y) {
-		if (x < 0 || y < 0 || x >= w || y >= h) return Tile.rock;
+		if (x < 0 || y < 0 || x >= w || y >= h) return Tile.wall;
 		return Tile.tiles[tiles[x + y * w]];
 	}
 

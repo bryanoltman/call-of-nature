@@ -15,7 +15,7 @@ public class Tile {
 
 	public static Tile[] tiles = new Tile[256];
 	public static Tile grass = new GrassTile(0);
-	public static Tile rock = new RockTile(1);
+	public static Tile wall = new RockTile(1);
 	public static Tile water = new WaterTile(2);
 	public static Tile flower = new FlowerTile(3);
 	public static Tile tree = new TreeTile(4);
