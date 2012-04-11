@@ -84,16 +84,17 @@ public class RockTile extends Tile {
 //			}
 //		}
 		
-		return false;
-	}
-
-	public void hurt(Level level, int x, int y, int dmg) {
-		int buildup = level.getData(x,y);
+		int buildup = level.getData(xt, yt);
 		if (buildup < 3) {
 			buildup++;
 		}
 		
-		level.setData(x, y, buildup);
+		level.setData(xt, yt, buildup);
+		
+		return true;
+	}
+
+	public void hurt(Level level, int x, int y, int dmg) {
 		
 //		int damage = level.getData(x, y) + dmg;
 ////		level.add(new SmashParticle(x * 16 + 8, y * 16 + 8));

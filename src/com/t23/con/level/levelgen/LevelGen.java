@@ -96,6 +96,7 @@ public class LevelGen {
 
 	public static byte[][] createAndValidateTopMap(int w, int h) {
 		byte[] map = new byte[w * h];
+		byte[] data = new byte[w * h];
 		
 		for (int x = 0; x < levelOneMap.length; x++) {
 			char[] chars = levelOneMap[x].toCharArray();
@@ -116,7 +117,7 @@ public class LevelGen {
 			}
 		}
 		
-		return new byte[][] { map, new byte[w * h] };
+		return new byte[][] { map, data };
 		
 		
 //		int attempt = 0;
