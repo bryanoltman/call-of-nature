@@ -89,7 +89,7 @@ public class RockTile extends Tile {
 
 	public void hurt(Level level, int x, int y, int dmg) {
 		int buildup = level.getData(x,y);
-		if (buildup == 0) {
+		if (buildup < 3) {
 			buildup++;
 		}
 		
