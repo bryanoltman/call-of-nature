@@ -273,24 +273,47 @@ public class Game extends Canvas implements Runnable {
 			}
 		}
 
-		for (int i = 0; i < 10; i++) {
-			if (i < player.health)
-				screen.render(i * 8, screen.h - 16, 0 + 12 * 32, Color.get(000, 200, 500, 533), 0);
-			else
-				screen.render(i * 8, screen.h - 16, 0 + 12 * 32, Color.get(000, 100, 000, 000), 0);
-
-			if (player.staminaRechargeDelay > 0) {
-				if (player.staminaRechargeDelay / 4 % 2 == 0)
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(000, 555, 000, 000), 0);
-				else
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(000, 110, 000, 000), 0);
-			} else {
-				if (i < player.stamina)
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(000, 220, 550, 553), 0);
-				else
-					screen.render(i * 8, screen.h - 8, 1 + 12 * 32, Color.get(000, 110, 000, 000), 0);
+		{
+			// Draw frame for bladder bar
+			int gaugeCornerSpriteCoordinate = 0 + 13 * 32;
+			int barWidth = 73;
+			int leftBarFill = Color.get(-1, -1, -1, 445);
+			int rightBarFill = Color.get(-1, -1, -1, 445);
+			if (player.stamina > 0) {
+				leftBarFill = Color.get(-1, 110, 440, 445);
+			}
+			
+			if (player.stamina == player.maxStamina) {
+				rightBarFill = Color.get(-1, 110, 440, 445);
+			}
+			
+			screen.render(-2, screen.h - 10, gaugeCornerSpriteCoordinate, leftBarFill, 0);
+			screen.render(-2, screen.h - 6, gaugeCornerSpriteCoordinate, leftBarFill, 2);
+			screen.render(barWidth, screen.h - 10, gaugeCornerSpriteCoordinate, rightBarFill, 1);
+			screen.render(barWidth, screen.h - 6, gaugeCornerSpriteCoordinate, rightBarFill, 3);
+			
+			for (int x = 0; x < 9; x++) {
+				if (x < player.stamina) {
+					screen.render(2 + x * 8, screen.h - 10, 1 + 13 * 32, Color.get(-1, 110, 440, 445), 0);
+					screen.render(2 + x * 8, screen.h - 6, 1 + 13 * 32, Color.get(-1, 110, 440, 445), 2);
+				}
+				else {
+					screen.render(2 + x * 8, screen.h - 10, 1 + 13 * 32, Color.get(-1, -1, -1, 445), 0);
+					screen.render(2 + x * 8, screen.h - 6, 1 + 13 * 32, Color.get(-1, -1, -1, 445), 2);
+				}
 			}
 		}
+
+		// Draw health indicators
+		for (int i = 0; i < 10; i++) {
+			if (i < player.health) {
+				screen.render(i * 8, screen.h - 16, 0 + 12 * 32, Color.get(000, 200, 500, 533), 0);
+			}
+			else {
+				screen.render(i * 8, screen.h - 16, 0 + 12 * 32, Color.get(000, 100, 000, 000), 0);
+			}
+		}
+		
 		if (player.activeItem != null) {
 			player.activeItem.renderInventory(screen, 10 * 8, screen.h - 16);
 		}
